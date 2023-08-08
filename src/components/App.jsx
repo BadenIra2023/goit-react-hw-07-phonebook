@@ -1,22 +1,35 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../redux/contactsSlice';
+import { useEffect } from 'react';
+import { addContact } from '../redux/operations';
 
-import { nanoid } from 'nanoid';
+import { fetchContacts } from "../redux/operations"
+import { selectLoading, selectError } from "../redux/selectors"
 import { PhoneBook } from './PhoneBook/PhoneBook';
 import { ContactsList } from './ContactsList/ContactsList';
 import ContactForm from './ContactForm/ContactForm.jsx';
 import { Filter } from './Filter/Filter';
 
 export const App = () => {
+ 
+
+  const filterState = useSelector(store => {
+    return store.filtered;
+  });
+const dispatch = useDispatch();
+
+   useEffect(() => {
+    dispatch(fetchContacts());
+   }, [dispatch]);
+  
   const contacts = useSelector(store => {
-    return store.contacts.contacts;
+    return store.contacts.contacts.items;
   });
  
-  const dispatch = useDispatch();
+  
   
   const addNewContact = newContact => {
   const { name, number } = newContact;
-  const contact = { id: nanoid(3), name: name, number: number };
+  const contact = { name: name, phone: number };
   const toLowerCase = contacts.find(
   contact => contact.name.toLowerCase() === name.toLowerCase());
   
@@ -25,7 +38,7 @@ export const App = () => {
       return;
   } 
   
-  dispatch(addContact(contact));
+  dispatch(addContact(contact)); 
 
   }; 
 
