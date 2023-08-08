@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { addContact } from '../redux/operations';
 
 import { fetchContacts } from "../redux/operations"
-import { selectLoading, selectError } from "../redux/selectors"
 import { PhoneBook } from './PhoneBook/PhoneBook';
 import { ContactsList } from './ContactsList/ContactsList';
 import ContactForm from './ContactForm/ContactForm.jsx';
@@ -12,9 +11,9 @@ import { Filter } from './Filter/Filter';
 export const App = () => {
  
 
-  const filterState = useSelector(store => {
+/*  const filterState = useSelector(store => {
     return store.filtered;
-  });
+  }); */
 const dispatch = useDispatch();
 
    useEffect(() => {
